@@ -10,10 +10,10 @@ root = 'https://subslikescript.com'  # this is the homepage of the website
 website = f'{root}/movies_letter-X'  # concatenating the homepage with the movies "letter-X" section. You can choose any section (e.g., letter-A, letter-B, ...)
 result = requests.get(website)
 content = result.text
-soup = BeautifulSoup(content, 'lxml')
+soup = BeautifulSoup(content, 'lxml') # 'lxml' is a parser that parses the website into a html. 
 
-# Locate the box that contains the pagination bar
-pagination = soup.find('ul', class_='pagination')
+# Locate the box that contains the PAGINATION bar (This is to scrape multiple pages of a website)
+pagination = soup.find('ul', class_='pagination')  
 pages = pagination.find_all('li', class_='page-item')
 last_page = pages[-2].text  # this is the number of pages that the website has inside the movies "letter X" section
 
@@ -33,10 +33,10 @@ for page in range(1, int(last_page)+1):
     # Store each link in "links" list (href doesn't consider root aka "homepage", so we have to concatenate it later)
     links = []
     for link in box.find_all('a', href=True):  # find_all returns a list
-        links.append(link['href'])
+        links.append(link['href']) # Here we append each link into the list that we made called links on line 34
 
     #################################################
-    # Extracting the movie transcript
+    # Extracting the individual movie transcripts
     #################################################
 
     for link in links:
